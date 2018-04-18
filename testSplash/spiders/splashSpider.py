@@ -28,7 +28,7 @@ script_start = """
 
         local ex = exits()
         local a = 0
-        while ex==true and a<30 do
+        while ex==true and a<40 do
             local dimensions = get_dimensions()
             splash:mouse_click(dimensions.x, dimensions.y)
             splash:set_viewport_full()
@@ -68,7 +68,7 @@ script_per_page = """
 
         local ex = exits()
         local a = 0
-        while ex==true and a<5 do
+        while ex==true and a<10 do
             local dimensions = get_dimensions()
             splash:mouse_click(dimensions.x, dimensions.y)
             splash:set_viewport_full()
@@ -88,7 +88,9 @@ class SplashSpider(spider.Spider):
 
     name = "splash"
 
-    start_urls = ['https://www.foody.vn/ha-noi']
+    start_urls = ['https://www.foody.vn/ha-noi',
+                  'https://www.foody.vn/',
+                  'https://www.foody.vn/da-nang']
 
     allowed_domains = ["www.foody.vn"]
 
@@ -102,15 +104,15 @@ class SplashSpider(spider.Spider):
 
     def parse(self, response):
         body = response.body
-        with open("hanoi5.html","wb") as file:
-            file.write(body)
+        # with open("hanoi5.html","wb") as file:
+        #     file.write(body)
 
         urls_item = response.xpath('//div[@class="avatar"]/a/@href').extract()
         print("===============================================================")
         count = 0
         for path in urls_item:
             a = path.split("/")[1]
-            if a == "ha-noi" :
+            if a != "thanh-vien" :
                 print(path)
                 count +=1
                 path = response.urljoin(path) + "/binh-luan"
@@ -143,7 +145,7 @@ class SplashSpider(spider.Spider):
             if point!=None and content!=None :
                 list_item.append(point + "\t" + content)
 
-        with open("data/{}.txt".format(page), "w") as file:
+        with open("data2/{}.txt".format(page), "w") as file:
             for i in list_item:
                 file.write(i+"\n")
             # yield self.parse_detail_item(it)

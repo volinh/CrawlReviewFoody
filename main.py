@@ -15,11 +15,11 @@ def preprocess_data(raw_data):
             good_points.append(i)
     return bad_points,n_points,good_points
 
-list_file = os.listdir("data")
+list_file = os.listdir("data2")
 print(len(list_file))
 list_data = []
 for i in list_file:
-    with open("data/"+i,"r") as file:
+    with open("data2/"+i,"r") as file:
         lines = file.readlines()
         list_data.extend(lines)
 print(len(list_data))
